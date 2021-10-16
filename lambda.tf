@@ -26,6 +26,6 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ondemand_minecraft_task_starter_lambda.function_name
-  principal     = format("logs.%s.amazonaws.com", data.aws_region.current.name)
+  principal     = "logs.us-east-1.amazonaws.com"
   source_arn    = format("%s:*", aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn)
 }
