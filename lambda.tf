@@ -1,6 +1,6 @@
 data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
   type        = "zip"
-  source_content = templatefile("../lambda/lambda_function.py", {
+  source_content = templatefile("lambda/lambda_function.py", {
     aws_region = var.aws_region,
     cluster_name = aws_ecs_cluster.minecraft_ondemand_cluster.name,
     service_name = aws_ecs_service.minecraft_ondemand_service.name,
