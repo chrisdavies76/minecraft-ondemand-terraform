@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "route53-query-logging-policy" {
       "logs:PutLogEvents",
     ]
 
-    resources = [aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn]
+    resources = ["${aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn}:*"]
 
     principals {
       identifiers = ["route53.amazonaws.com"]
