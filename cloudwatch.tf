@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "aws_route53_hosted_zone_log_group" {
-  name              = "/aws/route53/${aws_route53_zone.minecraft_ondemand_route53_zone.name}"
+  name              = "/aws/route53/${data.aws_route53_zone.minecraft_ondemand_route53_zone.name}"
   retention_in_days = var.route53_log_retention_days
 }
 

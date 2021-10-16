@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "DNSZONE"
-          value = aws_route53_zone.minecraft_ondemand_route53_zone.id
+          value = data.aws_route53_zone.minecraft_ondemand_route53_zone.id
         },
         {
           name  = "SERVERNAME"

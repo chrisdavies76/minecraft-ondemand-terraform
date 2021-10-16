@@ -144,7 +144,7 @@ resource "aws_iam_policy" "minecraft_ondemand_route53_update_policy" {
           "route53:ChangeResourceRecordSets",
           "route53:ListResourceRecordSets"
         ],
-        "Resource" : aws_route53_zone.minecraft_ondemand_route53_zone.arn
+        "Resource" : data.aws_route53_zone.minecraft_ondemand_route53_zone.arn
       },
       {
         "Effect" : "Allow",
