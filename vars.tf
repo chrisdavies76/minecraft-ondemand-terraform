@@ -54,7 +54,7 @@ variable "minecraft_version" {
 
 variable "server_type" {
   description = "Server type to use, such as PAPER or SPYGOT"
-  default = ""
+  default     = ""
 }
 
 variable "memory" {
