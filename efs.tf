@@ -2,6 +2,14 @@ resource "aws_efs_file_system" "minecraft_ondemand_efs" {
   tags = var.common_tags
 }
 
+resource "aws_efs_backup_policy" "policy" {
+  file_system_id = aws_efs_file_system.minecraft_ondemand_efs.id
+
+  backup_policy {
+    status = "ENABLED"
+  }
+}
+
 resource "aws_efs_access_point" "minecraft_ondemand_efs_access_point" {
   file_system_id = aws_efs_file_system.minecraft_ondemand_efs.id
   root_directory {
