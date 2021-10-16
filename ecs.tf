@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "SERVICE"
-          value = "minecraft-server"
+          value = aws_ecs_service.minecraft_ondemand_service.name
         },
         {
           name  = "DNSZONE"
