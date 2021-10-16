@@ -36,3 +36,18 @@ variable "common_tags" {
     For = "minecraft-ondemand"
   }
 }
+
+variable "whitelist" {
+  description = "Whitelist as described in https://github.com/itzg/docker-minecraft-server#whitelist-players"
+  default = ""
+}
+
+variable "version" {
+  description = "Version of Minecraft"
+  default = ""
+}
+
+variable "server_type" {
+  description = "Server type to use, such as PAPER or SPYGOT"
+  default = ""
+}

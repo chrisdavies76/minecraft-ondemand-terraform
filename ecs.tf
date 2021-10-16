@@ -35,6 +35,22 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         {
           name  = "EULA"
           value = "TRUE"
+        },
+        {
+          name  = "VERSION"
+          value = var.version
+        },
+        {
+          name  = "TYPE"
+          value = var.server_type
+        },
+        {
+          name  = "WHITELIST"
+          value = var.whitelist
+        },
+        {
+          name  = "OVERRIDE_WHITELIST"
+          value = "true"
         }
       ]
       mountPoints = [
