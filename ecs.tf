@@ -53,10 +53,6 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           value = var.whitelist
         },
         {
-          name  = "OVERRIDE_WHITELIST"
-          value = "true"
-        },
-        {
           name  = "ENFORCE_WHITELIST"
           value = "true"
         }
