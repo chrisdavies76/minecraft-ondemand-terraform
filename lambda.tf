@@ -1,7 +1,7 @@
 data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
   type        = "zip"
   source_content = templatefile("${path.module}/lambda/lambda_function.py", {
-    aws_region = var.aws_region,
+    aws_region = data.aws_region.current.name,
     cluster_name = aws_ecs_cluster.minecraft_ondemand_cluster.name,
     service_name = aws_ecs_service.minecraft_ondemand_service.name,
   })
@@ -26,6 +26,6 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ondemand_minecraft_task_starter_lambda.function_name
-  principal     = format("logs.%s.amazonaws.com", var.aws_region)
+  principal     = format("logs.%s.amazonaws.com", data.aws_region.current.name)
   source_arn    = format("%s:*", aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn)
 }
