@@ -45,6 +45,10 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           value = var.server_type
         },
         {
+          name  = "OPS"
+          value = var.ops
+        },
+        {
           name  = "WHITELIST"
           value = var.whitelist
         },

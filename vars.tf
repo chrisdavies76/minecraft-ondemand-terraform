@@ -42,6 +42,11 @@ variable "whitelist" {
   default = ""
 }
 
+variable "ops" {
+  description = "Server admins"
+  default = ""
+}
+
 variable "minecraft_version" {
   description = "Version of Minecraft"
   default = ""
