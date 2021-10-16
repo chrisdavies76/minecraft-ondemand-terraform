@@ -17,7 +17,7 @@ resource "aws_route53_query_log" "minecraft_ondemand_route53_zone_query_log_conf
 
 resource "aws_route53_record" "minecraft_ondemand_server_a_record" {
   zone_id = aws_route53_zone.minecraft_ondemand_route53_zone.zone_id
-  name    = format("minecraft.%s", var.domain_name)
+  name    = "minecraft"
   type    = "A"
   ttl     = "30"
   records = ["1.1.1.1"]
