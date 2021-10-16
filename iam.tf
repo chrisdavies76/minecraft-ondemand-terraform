@@ -86,7 +86,7 @@ resource "aws_iam_policy" "minecraft_ondemand_ecs_control_policy" {
         ],
         "Resource" : [
           aws_ecs_service.minecraft_ondemand_service.id,
-          format("arn:aws:ecs:%s:%s:task/minecraft/*", var.aws_region, data.aws_caller_identity.current.account_id)
+          aws_ecs_task_definition.minecraft_ondemand_task.arn,
         ]
       },
       {
@@ -205,7 +205,7 @@ data "aws_iam_policy_document" "route53-query-logging-policy" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:aws:logs:*:*:log-group:/aws/route53/*"]
+    resources = [aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn]
 
     principals {
       identifiers = ["route53.amazonaws.com"]
