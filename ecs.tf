@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "VERSION"
-          value = var.version
+          value = var.minecraft_version
         },
         {
           name  = "TYPE"

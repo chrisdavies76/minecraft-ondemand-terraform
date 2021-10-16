@@ -42,7 +42,7 @@ variable "whitelist" {
   default = ""
 }
 
-variable "version" {
+variable "minecraft_version" {
   description = "Version of Minecraft"
   default = ""
 }
