@@ -85,8 +85,8 @@ resource "aws_iam_policy" "minecraft_ondemand_ecs_control_policy" {
           "ecs:*"
         ],
         "Resource" : [
-          aws_ecs_service.minecraft_ondemand_service.id,
-          aws_ecs_task_definition.minecraft_ondemand_task.arn,
+          aws_ecs_service.minecraft_ondemand_service.arn,
+          "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:task/minecraft/*",
         ]
       },
       {
