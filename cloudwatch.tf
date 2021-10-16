@@ -12,7 +12,7 @@ resource "aws_cloudwatch_log_subscription_filter" "minecraft_ondemand_route53_qu
   depends_on      = [aws_lambda_permission.allow_cloudwatch]
   name            = "minecraft_ondemand"
   log_group_name  = aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.name
-  filter_pattern  = format("minecraft.%s", var.domain_name)
+  filter_pattern  = aws_ecs_cluster.minecraft_ondemand_cluster.name
   destination_arn = aws_lambda_function.ondemand_minecraft_task_starter_lambda.arn
 }
 

@@ -63,7 +63,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "SERVERNAME"
-          value = format("minecraft.%s", var.domain_name)
+          value = aws_route53_record.minecraft_ondemand_server_a_record.name
         },
         {
           name  = "SNSTOPIC"
