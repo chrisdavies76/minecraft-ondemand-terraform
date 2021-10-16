@@ -105,8 +105,8 @@ resource "aws_ecs_service" "minecraft_ondemand_service" {
   cluster         = aws_ecs_cluster.minecraft_ondemand_cluster.id
   task_definition = aws_ecs_task_definition.minecraft_ondemand_task.arn
   desired_count   = 0
-  #   iam_role        = aws_iam_role.minecraft_ondemand_fargate_task_role.arn
-  depends_on = [aws_iam_policy.minecraft_ondemand_efs_access_policy]
+
+  depends_on = [aws_iam_role_policy_attachment.minecraft_ondemand_efs_access_policy_attachment]
 
   capacity_provider_strategy {
     capacity_provider = "FARGATE_SPOT"
