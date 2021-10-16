@@ -39,20 +39,26 @@ variable "common_tags" {
 
 variable "whitelist" {
   description = "Whitelist as described in https://github.com/itzg/docker-minecraft-server#whitelist-players"
-  default = ""
+  default     = ""
 }
 
 variable "ops" {
   description = "Server admins"
-  default = ""
+  default     = ""
 }
 
 variable "minecraft_version" {
   description = "Version of Minecraft"
-  default = ""
+  default     = ""
 }
 
 variable "server_type" {
   description = "Server type to use, such as PAPER or SPYGOT"
   default = ""
+}
+
+variable "memory" {
+  type        = number
+  description = "Memory of the container, in GB"
+  default     = 2
 }
