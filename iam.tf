@@ -194,22 +194,3 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_lambda_cloudwatch_
   role       = aws_iam_role.ondemand_minecraft_task_starter_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
-
-
-# Cloudwatch Route53 logging policy document
-
-data "aws_iam_policy_document" "route53-query-logging-policy" {
-  statement {
-    actions = [
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
-    ]
-
-    resources = [aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn]
-
-    principals {
-      identifiers = ["route53.amazonaws.com"]
-      type        = "Service"
-    }
-  }
-}

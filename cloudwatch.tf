@@ -12,6 +12,22 @@ resource "aws_cloudwatch_log_resource_policy" "route53_query_logging_policy" {
   policy_name     = "route53-query-logging-policy"
 }
 
+data "aws_iam_policy_document" "route53-query-logging-policy" {
+  statement {
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+
+    resources = [aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn]
+
+    principals {
+      identifiers = ["route53.amazonaws.com"]
+      type        = "Service"
+    }
+  }
+}
+
 resource "aws_cloudwatch_log_subscription_filter" "minecraft_ondemand_route53_query_log_filter" {
   depends_on      = [aws_lambda_permission.allow_cloudwatch]
   name            = "minecraft_ondemand"
