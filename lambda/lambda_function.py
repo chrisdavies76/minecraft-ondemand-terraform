@@ -7,7 +7,7 @@ def lambda_handler(event, context):
   response = ecs.describe_services(
     cluster='${cluster_name}',
     services=[
-      'minecraft-server',
+      '${service_name}',
     ]
   )
 
@@ -16,9 +16,9 @@ def lambda_handler(event, context):
   if desired == 0:
     ecs.update_service(
       cluster='${cluster_name}',
-      service='minecraft-server',
+      service='${service_name}',
       desiredCount=1
     )
     print("Updated desiredCount to 1")
   else:
-    print("desiredCount already at 1")
+    print("DesiredCount already at 1")
