@@ -26,6 +26,5 @@ If everything worked correctly, trying to resolve `minecraft.${DOMAIN_NAME}` sho
 ## Caveats
 
 * Limited testing done so far.
-* Limited to the `us-east-1` AWS region, other regions will most likely fail.
 * Twilio SMS notifications are not supported.
 * At this time `terraform destroy` is not guaranteed to work cleanly in a reliable manner.

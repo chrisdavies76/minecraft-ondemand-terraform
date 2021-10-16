@@ -3,9 +3,9 @@ import boto3
 
 def lambda_handler(event, context):
 
-  ecs = boto3.client('ecs', region_name='us-east-1')
+  ecs = boto3.client('ecs', region_name='${aws_region}')
   response = ecs.describe_services(
-    cluster='minecraft',
+    cluster='${cluster_name}',
     services=[
       'minecraft-server',
     ]
@@ -15,7 +15,7 @@ def lambda_handler(event, context):
 
   if desired == 0:
     ecs.update_service(
-      cluster='minecraft',
+      cluster='${cluster_name}',
       service='minecraft-server',
       desiredCount=1
     )
