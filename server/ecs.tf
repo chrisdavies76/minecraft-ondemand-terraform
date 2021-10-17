@@ -59,6 +59,10 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         {
           name  = "ENFORCE_WHITELIST"
           value = "true"
+        },
+        {
+          name  = "ENABLE_WHITELIST"
+          value = "true"
         }
       ]
       mountPoints = [
