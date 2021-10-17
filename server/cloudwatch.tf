@@ -15,3 +15,8 @@ resource "aws_cloudwatch_log_group" "lambda_function_log_group" {
   name              = "/aws/lambda/${local.lambda_function_name}"
   retention_in_days = var.lambda_log_retention_days
 }
+
+resource "aws_cloudwatch_log_group" "ecs" {
+  name              = "/aws/ecs/${local.hostname}"
+  retention_in_days = var.lambda_log_retention_days
+}

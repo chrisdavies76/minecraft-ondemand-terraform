@@ -67,6 +67,14 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           containerPath = "/data"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group = aws_cloudwatch_log_group.ecs.name
+          awslogs-region = data.aws_region.current.name
+          awslogs-stream-prefix = "minecraft-server"
+        }
+      }
     },
     {
       name      = "minecraft-ecsfargate-watchdog"
@@ -108,6 +116,14 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           containerPath = "/data"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group = aws_cloudwatch_log_group.ecs.name
+          awslogs-region = data.aws_region.current.name
+          awslogs-stream-prefix = "ecsfargate-watchdog"
+        }
+      }
     }
   ])
 
