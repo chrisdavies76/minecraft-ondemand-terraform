@@ -10,7 +10,7 @@ module "minecraft_common" {
 module "minecraft_server1" {
   source     = "./server"
   name = "minecraft"
-  sns_notification_email = "address@example.com"
+  # sns_notification_emails = ["address@example.com"]
   minecraft_version = "1.17.1"
   server_type = "PAPER"
   ops = "your_mc_username_here"
