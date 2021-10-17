@@ -8,8 +8,9 @@ variable "lambda_log_retention_days" {
   default = 7
 }
 
-variable "sns_notification_email" {
-  type = string
+variable "sns_notification_emails" {
+  type = list(string)
+  default = []
 }
 
 variable "startup_minutes" {
