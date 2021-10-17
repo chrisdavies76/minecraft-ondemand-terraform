@@ -14,7 +14,7 @@ resource "aws_lambda_function" "ondemand_minecraft_task_starter_lambda" {
     aws_cloudwatch_log_group.lambda_function_log_group
   ]
   filename         = "lambda_function.zip"
-  function_name    = var.lambda_function_name
+  function_name    = local.lambda_function_name
   role             = aws_iam_role.ondemand_minecraft_task_starter_lambda_role.arn
   handler          = "lambda_function.lambda_handler"
   source_code_hash = data.archive_file.ondemand_minecraft_task_starter_lambda_zip.output_base64sha256
@@ -27,5 +27,5 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ondemand_minecraft_task_starter_lambda.function_name
   principal     = "logs.us-east-1.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn}:*"
+  source_arn    = "${var.hosted_zone_log_group_arn}:*"
 }

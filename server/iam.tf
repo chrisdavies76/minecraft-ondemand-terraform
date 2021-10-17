@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsTaskExecutionRole"
+  name = "${var.name}EcsTaskExecutionRole"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_exec_role_policy_attachment"
 }
 
 resource "aws_iam_role" "minecraft_ondemand_fargate_task_role" {
-  name = "ecs.task.minecraft-server"
+  name = "ecs.task.${var.name}-server"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -39,8 +39,12 @@ resource "aws_iam_role" "minecraft_ondemand_fargate_task_role" {
   tags = var.common_tags
 }
 
+data "aws_efs_file_system" "main" {
+  file_system_id = var.efs_id
+}
+
 resource "aws_iam_policy" "minecraft_ondemand_efs_access_policy" {
-  name        = "minecraft_ondemand_efs_access_policy"
+  name        = "${var.name}_ondemand_efs_access_policy"
   path        = "/"
   description = "Allows Read Write access to the Minecraft server EFS"
   policy = jsonencode({
@@ -53,7 +57,7 @@ resource "aws_iam_policy" "minecraft_ondemand_efs_access_policy" {
           "elasticfilesystem:ClientWrite",
           "elasticfilesystem:DescribeFileSystems"
         ],
-        "Resource" : aws_efs_file_system.minecraft_ondemand_efs.arn,
+        "Resource" : data.aws_efs_file_system.main.arn,
         "Condition" : {
           "StringEquals" : {
             "elasticfilesystem:AccessPointArn" : aws_efs_access_point.minecraft_ondemand_efs_access_point.arn
@@ -73,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_efs_access_policy_
 data "aws_caller_identity" "current" {}
 
 resource "aws_iam_policy" "minecraft_ondemand_ecs_control_policy" {
-  name        = "minecraft_ondemand_ecs_control_policy"
+  name        = "${var.name}_ondemand_ecs_control_policy"
   path        = "/"
   description = "Allows the Minecraft server ECS task to understand which network interface is attached to it in order to properly update the DNS records"
   policy = jsonencode({
@@ -109,7 +113,7 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_ecs_control_policy
 }
 
 resource "aws_iam_policy" "minecraft_ondemand_sns_publish_policy" {
-  name        = "minecraft_ondemand_sns_publish_policy"
+  name        = "${var.name}_ondemand_sns_publish_policy"
   path        = "/"
   description = "Allows the Minecraft server ECS task to send SNS notifications on a specific topic"
   policy = jsonencode({
@@ -131,7 +135,7 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_sns_publish_policy
 }
 
 resource "aws_iam_policy" "minecraft_ondemand_route53_update_policy" {
-  name        = "minecraft_ondemand_route53_update_policy"
+  name        = "${var.name}_ondemand_route53_update_policy"
   path        = "/"
   description = "Allows the Minecraft server ECS task to update DNS records on a hosted zone"
   policy = jsonencode({
@@ -166,7 +170,7 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_route53_update_pol
 # Lambda Role
 
 resource "aws_iam_role" "ondemand_minecraft_task_starter_lambda_role" {
-  name = "ondemand_minecraft_task_starter_lambda_role"
+  name = "ondemand_${var.name}_task_starter_lambda_role"
 
   assume_role_policy = <<EOF
 {

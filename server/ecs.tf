@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "minecraft_ondemand_cluster" {
-  name               = "minecraft"
+  name               = var.name
   capacity_providers = ["FARGATE_SPOT"]
 
   setting {
@@ -10,7 +10,7 @@ resource "aws_ecs_cluster" "minecraft_ondemand_cluster" {
 }
 
 resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
-  family             = "minecraft-server"
+  family             = "${var.name}-server"
   task_role_arn      = aws_iam_role.minecraft_ondemand_fargate_task_role.arn
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
@@ -87,7 +87,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "SERVERNAME"
-          value = "${aws_route53_record.minecraft_ondemand_server_a_record.name}.${data.aws_route53_zone.minecraft_ondemand_route53_zone.name}"
+          value = local.hostname
         },
         {
           name  = "SNSTOPIC"
@@ -114,7 +114,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
   volume {
     name = "data"
     efs_volume_configuration {
-      file_system_id     = aws_efs_file_system.minecraft_ondemand_efs.id
+      file_system_id     = var.efs_id
       transit_encryption = "ENABLED"
       authorization_config {
         access_point_id = aws_efs_access_point.minecraft_ondemand_efs_access_point.id
@@ -138,8 +138,8 @@ resource "aws_ecs_service" "minecraft_ondemand_service" {
   }
 
   network_configuration {
-    subnets          = [aws_default_subnet.default_az1.id, aws_default_subnet.default_az2.id, aws_default_subnet.default_az3.id]
-    security_groups  = [aws_security_group.allow_minecraft_server_port.id]
+    subnets          = var.subnet_ids
+    security_groups  = [var.ecs_sg_id]
     assign_public_ip = true
   }
 

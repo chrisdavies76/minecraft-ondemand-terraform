@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "minecraft_ondemand_updates_topic" {
-  name = "minecraft-server-updates-topic"
+  name = "${var.name}-server-updates-topic"
 }
 
 resource "aws_sns_topic_subscription" "minecraft_ondemand_updates_topic_email_subscription" {
