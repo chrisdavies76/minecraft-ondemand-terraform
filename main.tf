@@ -15,6 +15,13 @@ module "minecraft_server1" {
   server_type = "PAPER"
   ops = "your_mc_username_here"
 
+  # Check the env variables that are available here:
+  # https://github.com/itzg/docker-minecraft-server/blob/master/README.md
+  extra_envs = {
+    SPAWN_PROTECTION = "0"
+    MOTD             = "My awesome server!!"
+  }
+
   route53_zone_id = aws_route53_zone.minecraft.id
   efs_id = module.minecraft_common.efs_id
   subnet_ids = module.minecraft_common.subnet_ids
