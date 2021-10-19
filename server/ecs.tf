@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           hostPort      = 25565
         }
       ]
-      environment = [
+      environment = concat([
         {
           name  = "EULA"
           value = "TRUE"
@@ -64,7 +64,10 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
           name  = "ENABLE_WHITELIST"
           value = "true"
         }
-      ]
+      ], [ for k,v in var.extra_envs : {
+        name  = k
+        value = v
+      }])
       mountPoints = [
         {
           sourceVolume  = "data"

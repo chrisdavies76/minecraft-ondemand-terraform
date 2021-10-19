@@ -53,6 +53,11 @@ variable "memory" {
   default     = 2
 }
 
+variable "extra_envs" {
+  type = map(string)
+  default = {}
+}
+
 variable "common_tags" {
   default = {
     For = "minecraft-ondemand"
