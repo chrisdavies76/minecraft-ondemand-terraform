@@ -9,7 +9,7 @@ variable "lambda_log_retention_days" {
 }
 
 variable "sns_notification_emails" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
@@ -54,7 +54,7 @@ variable "memory" {
 }
 
 variable "extra_envs" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 

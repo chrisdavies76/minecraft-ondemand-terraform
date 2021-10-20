@@ -24,10 +24,10 @@ resource "aws_security_group" "nfs_from_minecraft" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description      = "EFS NFS port"
-    from_port        = 2049
-    to_port          = 2049
-    protocol         = "tcp"
+    description     = "EFS NFS port"
+    from_port       = 2049
+    to_port         = 2049
+    protocol        = "tcp"
     security_groups = [aws_security_group.allow_minecraft_server_port.id]
   }
 
