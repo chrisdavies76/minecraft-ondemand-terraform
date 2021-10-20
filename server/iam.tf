@@ -74,8 +74,6 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_efs_access_policy_
   policy_arn = aws_iam_policy.minecraft_ondemand_efs_access_policy.arn
 }
 
-data "aws_caller_identity" "current" {}
-
 resource "aws_iam_policy" "minecraft_ondemand_ecs_control_policy" {
   name        = "${var.name}_ondemand_ecs_control_policy"
   path        = "/"
@@ -112,28 +110,6 @@ resource "aws_iam_role_policy_attachment" "minecraft_ondemand_ecs_control_policy
   policy_arn = aws_iam_policy.minecraft_ondemand_ecs_control_policy.arn
 }
 
-resource "aws_iam_policy" "minecraft_ondemand_sns_publish_policy" {
-  name        = "${var.name}_ondemand_sns_publish_policy"
-  path        = "/"
-  description = "Allows the Minecraft server ECS task to send SNS notifications on a specific topic"
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Action" : "sns:Publish",
-        "Resource" : aws_sns_topic.minecraft_ondemand_updates_topic.arn
-      }
-    ]
-  })
-  tags = var.common_tags
-}
-
-resource "aws_iam_role_policy_attachment" "minecraft_ondemand_sns_publish_policy_attachment" {
-  role       = aws_iam_role.minecraft_ondemand_fargate_task_role.name
-  policy_arn = aws_iam_policy.minecraft_ondemand_sns_publish_policy.arn
-}
-
 resource "aws_iam_policy" "minecraft_ondemand_route53_update_policy" {
   name        = "${var.name}_ondemand_route53_update_policy"
   path        = "/"
@@ -165,36 +141,4 @@ resource "aws_iam_policy" "minecraft_ondemand_route53_update_policy" {
 resource "aws_iam_role_policy_attachment" "minecraft_ondemand_route53_update_policy_attachment" {
   role       = aws_iam_role.minecraft_ondemand_fargate_task_role.name
   policy_arn = aws_iam_policy.minecraft_ondemand_route53_update_policy.arn
-}
-
-# Lambda Role
-
-resource "aws_iam_role" "ondemand_minecraft_task_starter_lambda_role" {
-  name = "ondemand_${var.name}_task_starter_lambda_role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "minecraft_ondemand_ecs_control_policy_attachment_lambda" {
-  role       = aws_iam_role.ondemand_minecraft_task_starter_lambda_role.name
-  policy_arn = aws_iam_policy.minecraft_ondemand_ecs_control_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "minecraft_ondemand_lambda_cloudwatch_logging_policy_attachment" {
-  role       = aws_iam_role.ondemand_minecraft_task_starter_lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }

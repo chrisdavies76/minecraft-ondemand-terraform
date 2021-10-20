@@ -94,7 +94,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "SERVICE"
-          value = local.ecs_service_name
+          value = var.name
         },
         {
           name  = "DNSZONE"
@@ -148,7 +148,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
 }
 
 resource "aws_ecs_service" "minecraft_ondemand_service" {
-  name            = local.ecs_service_name
+  name            = var.name
   cluster         = aws_ecs_cluster.minecraft_ondemand_cluster.id
   task_definition = aws_ecs_task_definition.minecraft_ondemand_task.arn
   desired_count   = 0

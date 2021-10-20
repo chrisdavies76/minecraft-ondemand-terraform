@@ -12,3 +12,8 @@ variable "common_tags" {
     For = "minecraft-ondemand"
   }
 }
+
+variable "lambda_log_retention_days" {
+  type    = number
+  default = 7
+}

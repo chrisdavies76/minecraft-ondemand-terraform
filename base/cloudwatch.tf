@@ -27,3 +27,21 @@ data "aws_iam_policy_document" "route53-query-logging-policy" {
     }
   }
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "minecraft_ondemand_route53_query_log_filter" {
+  provider = aws.us-east-1
+
+  depends_on = [
+    aws_lambda_permission.allow_cloudwatch,
+    aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group,
+  ]
+  name            = "minecraft_ondemand"
+  log_group_name  = aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.name
+  filter_pattern  = data.aws_route53_zone.minecraft_ondemand_route53_zone.name
+  destination_arn = aws_lambda_function.ondemand_minecraft_task_starter_lambda.arn
+}
+
+resource "aws_cloudwatch_log_group" "lambda_function_log_group" {
+  name              = "/aws/lambda/${data.aws_route53_zone.minecraft_ondemand_route53_zone.name}"
+  retention_in_days = var.lambda_log_retention_days
+}
