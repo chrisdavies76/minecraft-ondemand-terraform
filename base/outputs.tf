@@ -7,15 +7,11 @@ output "efs_id" {
 }
 
 output "vpc_id" {
-  value = aws_default_vpc.default.id
+  value = aws_vpc.main.id
 }
 
 output "subnet_ids" {
-  value = [
-    aws_default_subnet.default_az1.id,
-    aws_default_subnet.default_az2.id,
-    aws_default_subnet.default_az3.id,
-  ]
+  value = aws_subnet.main.*.id
 }
 
 output "ecs_sg_id" {
