@@ -13,8 +13,8 @@ resource "aws_efs_backup_policy" "policy" {
 resource "aws_efs_mount_target" "minecraft_ondemand_efs_mount_target" {
   count = length(aws_subnet.main)
 
-  file_system_id  = aws_efs_file_system.minecraft_ondemand_efs.id
-  subnet_id       = aws_subnet.main[count.index].id
+  file_system_id = aws_efs_file_system.minecraft_ondemand_efs.id
+  subnet_id      = aws_subnet.main[count.index].id
   security_groups = [
     aws_security_group.nfs_from_minecraft.id,
     aws_security_group.nfs_from_manager.id,

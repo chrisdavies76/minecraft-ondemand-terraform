@@ -39,7 +39,7 @@ resource "aws_instance" "manager" {
 }
 
 data "cloudinit_config" "manager_cloudinit" {
-  gzip = true
+  gzip          = true
   base64_encode = true
 
   part {
