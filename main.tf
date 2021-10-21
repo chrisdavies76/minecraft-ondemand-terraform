@@ -5,6 +5,7 @@ resource "aws_route53_zone" "minecraft" {
 module "minecraft_common" {
   source          = "./base"
   route53_zone_id = aws_route53_zone.minecraft.id
+  ssh_pub_key = "your ssh pub key here"
 }
 
 module "minecraft_server1" {

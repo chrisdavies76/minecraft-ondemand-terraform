@@ -1,0 +1,14 @@
+packages:
+- nfs-common
+mounts:
+- [
+    ${efs_mount_target}:/,
+    /mnt,
+    nfs4,
+    "nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
+  ]
+power_state:
+  mode: poweroff
+  message: Setup done. Shutting down
+  timeout: 30
+  condition: True

@@ -35,6 +35,18 @@ resource "aws_subnet" "main" {
   }
 }
 
+resource "aws_subnet" "manager" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 3, 3)
+  availability_zone = data.aws_availability_zones.available.names[0]
+
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Minecraft manager"
+  }
+}
+
 resource "aws_security_group" "allow_minecraft_server_port" {
   name        = "minecraft_server_port"
   description = "Allow inbound traffic to the Minecraft server port"

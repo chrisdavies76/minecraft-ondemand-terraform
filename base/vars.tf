@@ -17,3 +17,7 @@ variable "lambda_log_retention_days" {
   type    = number
   default = 7
 }
+
+variable "ssh_pub_key" {
+  type = string
+}
