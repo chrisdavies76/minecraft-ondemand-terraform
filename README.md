@@ -4,7 +4,7 @@ Fork of [@JKolios](https://github.com/JKolios/minecraft-ondemand-terraform)' ter
 
 My version has some extra bells and whistles that improve on it:
 - spin up an arbitrary number of minecraft servers.
-- deploy them in whichever AWS region you want (route53 stuff is still bound to `eu-east-1` though).
+- deploy them in whichever AWS region you want (route53 stuff is still bound to `us-east-1` though).
 - notifications by email are optional.
 - doesn't use the default VPC in the account.
 - enable logging for the containers themselves (good to check out issues that may occur or nasty people trying to come in).
