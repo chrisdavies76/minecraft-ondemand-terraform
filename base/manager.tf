@@ -36,6 +36,12 @@ resource "aws_instance" "manager" {
   ]
 
   user_data = data.cloudinit_config.manager_cloudinit.rendered
+
+  lifecycle {
+    ignore_changes = [
+      ami,
+    ]
+  }
 }
 
 data "cloudinit_config" "manager_cloudinit" {
