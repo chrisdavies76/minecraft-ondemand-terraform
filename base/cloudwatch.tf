@@ -8,11 +8,11 @@ resource "aws_cloudwatch_log_group" "aws_route53_hosted_zone_log_group" {
 resource "aws_cloudwatch_log_resource_policy" "route53_query_logging_policy" {
   provider = aws.us-east-1
 
-  policy_document = data.aws_iam_policy_document.route53-query-logging-policy.json
+  policy_document = data.aws_iam_policy_document.route53_query_logging_policy.json
   policy_name     = "route53-query-logging-policy"
 }
 
-data "aws_iam_policy_document" "route53-query-logging-policy" {
+data "aws_iam_policy_document" "route53_query_logging_policy" {
   statement {
     actions = [
       "logs:CreateLogStream",

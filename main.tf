@@ -1,3 +1,12 @@
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    aws = {
+      version = "~> 3.0"
+    }
+  }
+}
+
 resource "aws_route53_zone" "minecraft" {
   name = "example.com"
 }
@@ -27,6 +36,4 @@ module "minecraft_server1" {
   efs_id                     = module.minecraft_common.efs_id
   subnet_ids                 = module.minecraft_common.subnet_ids
   ecs_sg_id                  = module.minecraft_common.ecs_sg_id
-  hosted_zone_log_group_name = module.minecraft_common.hosted_zone_log_group_name
-  hosted_zone_log_group_arn  = module.minecraft_common.hosted_zone_log_group_arn
 }

@@ -3,7 +3,7 @@ data "aws_route53_zone" "minecraft_ondemand_route53_zone" {
 }
 
 resource "aws_cloudwatch_log_resource_policy" "minecraft_ondemand_route53_zone_query_log_policy" {
-  policy_document = data.aws_iam_policy_document.route53-query-logging-policy.json
+  policy_document = data.aws_iam_policy_document.route53_query_logging_policy.json
   policy_name     = "route53-query-logging-policy"
 }
 
