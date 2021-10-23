@@ -1,30 +1,28 @@
-# minecraft-ondemand-terraform
+# Terraform ondemand minecraft servers using AWS ECS
 
-Terraform implementation of https://github.com/doctorray117/minecraft-ondemand 
+Fork of [@JKolios](https://github.com/JKolios/minecraft-ondemand-terraform)' terraform implementation of [@doctorray117](https://github.com/doctorray117/minecraft-ondemand) original idea.
+
+My version has some extra bells and whistles that improve on it:
+- spin up an arbitrary number of minecraft servers.
+- deploy them in whichever AWS region you want (route53 stuff is still bound to `eu-east-1` though).
+- notifications by email are optional.
+- doesn't use the default VPC in the account.
+- enable logging for the containers themselves (good to check out issues that may occur or nasty people trying to come in).
+- automatic backups.
+- management EC2 instance that allows you to manually change the file of a server or apply some other needed hammer (it's turned off by default to minimize the cost).
+- arbitrary environment variables for the server to allow for as much customization as one may want.
+- server resource dimensioning (CPU/RAM).
+
+You could probably start a company with just this and sell cheap minecraft servers.
+
+This README assumes you have quite some experience with terraform and can look into each module and see for yourself what variables are needed and do what.
+
+The `base` module has about 30 resources and the `server` module has little under 20, so it's not that complex of a terraform setup, but it is may not immediate for a first timer.
+Feel free to dig in and suggest improvements, fork, ask questions, whatever really.
 
 ## Prerequisites
-* Terraform 1.0 (Terraform 0.13 and later likely to work, untested). This README assumes you have basic knowledge of Terraform.
-* A domain under your control, DNS servers must be changeable
-* An AWS account that you have admin access over
-* Optionally, an email address to receive "Server started" and "Server Stopped" notifications
+* An AWS account that you have admin access over.
+* A route53 zone configured where the servers can be provisioned.
 
 ## Running
-
-Set up authentication with your AWS account using your preferred method from this doc: [Authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication) Using the *Static Credentials* method requires changing the `provider` definition in `terraform/provider.tf`.
-
-From the `terraform` directory, run `terraform plan` and `terraform apply`. You have to provide values to the following vars:
-* `domain_name` : The domain your server will run under
-* `sns_notification_email` : The email address where you will receive notifications
-You can input these from the command line or [through a tfvars file](https://www.terraform.io/docs/language/values/variables.html#variable-definitions-tfvars-files).
-
-Note the `hosted_zone_nameservers` output from `terraform apply`. Apply these DNS server addresses to your domain.
-
-Your `sns_notification_email` should have received a confirmation email from AWS. Follow the link in it to enable email notifications.
-
-If everything worked correctly, trying to resolve `minecraft.${DOMAIN_NAME}` should start the server. This might take 5-10 minutes on the first run. The server should then be reachable at `minecraft.${DOMAIN_NAME}`.
-
-## Caveats
-
-* Limited testing done so far.
-* Twilio SMS notifications are not supported.
-* At this time `terraform destroy` is not guaranteed to work cleanly in a reliable manner.
+`main.tf` is an example of how to instantiate the 2 modules: the base, which should be instantiated once; and the server, which can be instantiated once per server.
