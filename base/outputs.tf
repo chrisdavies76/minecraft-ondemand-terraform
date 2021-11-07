@@ -17,3 +17,8 @@ output "ecs_sg_id" {
   value       = aws_security_group.allow_minecraft_server_port.id
   description = "ID of the ECS security group for the MC servers."
 }
+
+output "cluster_arn" {
+  description = "Cluster ARN"
+  value       = aws_ecs_cluster.minecraft_ondemand_cluster.id
+}

@@ -27,3 +27,8 @@ variable "ssh_pub_key" {
   description = "SSH public key used to access the manager instance."
   type        = string
 }
+
+variable "cluster_name" {
+  description = "Name for the cluster"
+  type = string
+}

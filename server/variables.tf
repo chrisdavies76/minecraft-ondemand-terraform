@@ -1,3 +1,13 @@
+variable "cluster_name" {
+  description = "Name of the cluster"
+  type        = string
+}
+
+variable "cluster_arn" {
+  description = "ARN of the cluster"
+  type        = string
+}
+
 variable "name" {
   description = "Name of the server"
   type        = string

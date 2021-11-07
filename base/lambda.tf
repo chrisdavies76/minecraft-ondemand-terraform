@@ -1,7 +1,8 @@
 data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
   type = "zip"
   source_content = templatefile("${path.module}/lambda/lambda_function.py", {
-    aws_region = data.aws_region.current.name,
+    aws_region   = data.aws_region.current.name,
+    cluster_name = var.cluster_name,
   })
   source_content_filename = "lambda_function.py"
   output_path             = "lambda_function.zip"

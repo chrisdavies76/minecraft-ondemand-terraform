@@ -31,7 +31,7 @@ def extract_name(message):
 def handle_name(name):
   try:
     response = ecs.describe_services(
-      cluster=name,
+      cluster='${cluster_name}',
       services=[
         name,
       ]
@@ -48,7 +48,7 @@ def handle_name(name):
 
   if desired == 0:
     ecs.update_service(
-      cluster=name,
+      cluster='${cluster_name}',
       service=name,
       desiredCount=1
     )

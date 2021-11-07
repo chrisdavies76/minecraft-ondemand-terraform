@@ -15,6 +15,7 @@ module "minecraft_common" {
   source          = "./base"
   route53_zone_id = aws_route53_zone.minecraft.id
   ssh_pub_key     = "your ssh pub key here"
+  cluster_name    = "minecraft"
 }
 
 module "minecraft_server1" {
@@ -32,8 +33,10 @@ module "minecraft_server1" {
     MOTD             = "My awesome server!!"
   }
 
-  route53_zone_id            = aws_route53_zone.minecraft.id
-  efs_id                     = module.minecraft_common.efs_id
-  subnet_ids                 = module.minecraft_common.subnet_ids
-  ecs_sg_id                  = module.minecraft_common.ecs_sg_id
+  route53_zone_id = aws_route53_zone.minecraft.id
+  efs_id          = module.minecraft_common.efs_id
+  subnet_ids      = module.minecraft_common.subnet_ids
+  ecs_sg_id       = module.minecraft_common.ecs_sg_id
+  cluster_name    = "minecraft"
+  cluster_arn     = module.minecraft_common.cluster_arn
 }

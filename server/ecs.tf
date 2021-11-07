@@ -1,14 +1,3 @@
-resource "aws_ecs_cluster" "minecraft_ondemand_cluster" {
-  name               = var.name
-  capacity_providers = ["FARGATE_SPOT"]
-
-  setting {
-    name  = "containerInsights"
-    value = "enabled"
-  }
-  tags = var.common_tags
-}
-
 resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
   family             = "${var.name}-server"
   task_role_arn      = aws_iam_role.minecraft_ondemand_fargate_task_role.arn
@@ -90,7 +79,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
       environment = [
         {
           name  = "CLUSTER"
-          value = aws_ecs_cluster.minecraft_ondemand_cluster.name
+          value = var.cluster_name
         },
         {
           name  = "SERVICE"
@@ -149,7 +138,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
 
 resource "aws_ecs_service" "minecraft_ondemand_service" {
   name            = var.name
-  cluster         = aws_ecs_cluster.minecraft_ondemand_cluster.id
+  cluster         = var.cluster_arn
   task_definition = aws_ecs_task_definition.minecraft_ondemand_task.arn
   desired_count   = 0
 
