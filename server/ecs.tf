@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "minecraft_ondemand_task" {
         },
         {
           name  = "MEMORY"
-          value = "${var.memory}G"
+          value = "${ceil((var.memory+1)*1024*0.75)}M"
         },
         {
           name  = "TYPE"
